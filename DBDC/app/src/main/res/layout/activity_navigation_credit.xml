@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:focusableInTouchMode="true"
+    >
+
+    <include layout="@layout/include_toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="221dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_credit"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="50sp"
+            android:gravity="center"
+            android:layout_marginTop="32dp"
+            android:background="@mipmap/icon_navigation_credit"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:text="您的信用良好，请继续保持"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="#eaeef3"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/btn_creditRule"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textColor="@android:color/white"
+            android:text="信用分规则"
+            android:textSize="16sp"
+            android:background="@drawable/gray_org_state_enable"
+            />
+    </LinearLayout>
+
+    <com.wuwutongkeji.dibaidanche.common.widget.refreshlayout.RefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

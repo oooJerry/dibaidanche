@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    >
+
+    <FrameLayout
+        android:layout_width="250dp"
+        android:layout_height="340dp"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        android:orientation="vertical"
+        >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simpleDrawee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:id="@+id/btn_freeCard"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_org_shape_radiu_360"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="18dp"
+            android:text="冲年卡"
+            />
+
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:src="@mipmap/icon_close_big"
+        />
+</LinearLayout>

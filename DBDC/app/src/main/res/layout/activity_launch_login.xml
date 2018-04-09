@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:background="@android:color/white"
+    >
+
+    <include layout="@layout/include_toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:text="请输入您的手机号码，\n登录或者注册您的的拜单车账号"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+        
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_front"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:text="+86"
+            />
+
+        <com.wuwutongkeji.dibaidanche.common.widget.ContainsEmojiEditText
+            android:id="@+id/edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_back"
+            android:textSize="13sp"
+            android:textColorHint="#AAAAAA"
+            android:paddingLeft="8dp"
+            android:hint="请输入手机号"
+            android:textColor="#333333"
+            android:inputType="number"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_front"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:text="验证码"
+            />
+
+        <com.wuwutongkeji.dibaidanche.common.widget.ContainsEmojiEditText
+            android:id="@+id/edit_verifyCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_back"
+            android:textSize="13sp"
+            android:textColorHint="#AAAAAA"
+            android:paddingLeft="8dp"
+            android:hint="请输入验证码"
+            android:textColor="#333333"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/btn_sendCode"
+            android:layout_width="107dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:enabled="false"
+            android:background="@drawable/gray_org_state_enable"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        >
+
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_front"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:text="邀请码"
+            />
+
+        <com.wuwutongkeji.dibaidanche.common.widget.ContainsEmojiEditText
+            android:id="@+id/edit_inviteCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_selected_back"
+            android:textSize="13sp"
+            android:textColorHint="#AAAAAA"
+            android:paddingLeft="8dp"
+            android:hint="无邀请码可不填写"
+            android:textColor="#333333"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="提交"
+        android:background="@drawable/gray_org_state_enable"
+        android:enabled="false"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#AAAAAA"
+            android:text="点击提交，即表示已阅读并同意"
+            />
+        <TextView
+            android:id="@+id/btn_clause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#1b8aea"
+            android:text="《用车服务条款》"
+            />
+    </LinearLayout>
+
+</LinearLayout>

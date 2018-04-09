@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eaeef3">
+
+    <include layout="@layout/include_toolbar" />
+
+    <com.wuwutongkeji.dibaidanche.common.widget.ContainsEmojiEditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="32dp"
+        android:textSize="16sp"
+        android:textColorHint="#cccccc"
+        android:hint="请输入您的新昵称"
+        android:gravity="center"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_vertical"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        android:text="1-16个字符，仅支持中文、英文大小写、数字。"
+        />
+</LinearLayout>

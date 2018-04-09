@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#B3000000"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            android:text="提交成功"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:lineSpacingExtra="9dp"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            android:text="您的申请我们已收到，我们会尽快处理您的问题，感谢您对的拜单车的支持"
+            />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="32dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="确定"
+            android:background="@drawable/gray_org_state_enable"
+            />
+    </LinearLayout>
+
+</LinearLayout>

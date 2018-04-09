@@ -1,0 +1,14 @@
+ext {
+
+    android = [
+            compileSdkVersion: 26,
+            support_version:"26.+",
+            buildToolsVersion: "26.0.1",
+            applicationId    : "com.wuwutongkeji.dibaidanche",
+            minSdkVersion    : 14,
+            targetSdkVersion : 22,
+            versionCode      : 27,
+            versionName      : "2.0.6"
+    ]
+
+}

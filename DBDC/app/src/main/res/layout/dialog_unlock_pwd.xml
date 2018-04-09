@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:text="单车开锁密码"
+                />
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_close"
+                />
+        </LinearLayout>
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:gravity="center"
+            >
+            <com.wuwutongkeji.dibaidanche.common.widget.InputNumView
+                android:id="@+id/inputNumber"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/gray_org_state_enable"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:text="确定"
+            />
+    </LinearLayout>
+
+</LinearLayout>

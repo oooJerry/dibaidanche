@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SurfaceView
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+    <zxing.view.ViewfinderView
+        android:id="@+id/viewfinder_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:corner_color="@color/colorAccent"
+        app:laser_color="@color/colorAccent"
+        app:frame_color="#e1a05a"
+        app:mask_color="#88000000"
+        app:result_color="#00000000"
+        app:result_point_color="#00FF00"
+        app:label_text_color="#FFFFFF"
+        app:label_text="请对准车上的二维码"
+        app:label_text_size="16sp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="扫码用车"
+            />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/icon_close_white"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_gravity="bottom"
+        >
+
+        <LinearLayout
+            android:id="@+id/btn_inputCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_input_lock_code" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="手动输入车牌号"
+                android:textColor="#cccccc"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_light"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/flight_selector_select_scan"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#cccccc"
+                android:textSize="16sp"
+                android:text="手电筒"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

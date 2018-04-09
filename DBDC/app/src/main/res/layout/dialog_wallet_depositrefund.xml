@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            android:text="退押金"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="9dp"
+            android:text="押金已经变为199元，您要继续退款99元吗？"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            >
+
+            <Button
+                android:id="@+id/btn_Refund"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:text="残忍退押金"
+                android:background="@drawable/bg_org_shape_radiu_4_border_org"
+                />
+
+            <Button
+                android:id="@+id/btn_NoRefund"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="16dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:text="不退了"
+                android:background="@drawable/gray_org_state_enable"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

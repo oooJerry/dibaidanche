@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_shape_radiu_4"
+        android:orientation="vertical"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        >
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_bike_unlock_loading"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:text="正在开锁,若车锁已打开即可骑行"
+            />
+
+        <com.wuwutongkeji.dibaidanche.common.widget.ProgressLoaingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="32dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginBottom="32dp"
+            />
+    </LinearLayout>
+</LinearLayout>

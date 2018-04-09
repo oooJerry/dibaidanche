@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wuwutongkeji.dibaidanche">
+
+    <!-- 使用照相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.autofocus" />
+    <!--自动聚焦权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- 手电筒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT"></uses-permission>
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <application
+        android:name=".LaunchApp"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
+
+        <!-- 启动页 -->
+        <activity
+            android:name=".launch.SplashActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 首页 -->
+        <activity android:name=".launch.MainActivity" />
+
+        <!-- 登录 -->
+        <activity android:name=".launch.LoginActivity" />
+
+        <!-- 押金 -->
+        <activity android:name=".launch.DepositActivity" />
+
+        <!-- 实名认证 -->
+        <activity android:name=".launch.ApproveActivity" />
+
+        <!-- 申诉 -->
+        <activity android:name=".launch.AppealActivity" />
+
+        <!-- 完成 -->
+        <activity android:name=".launch.CompleteActivity" />
+
+        <!-- 扫码 -->
+        <activity android:name=".bike.ScanCodeUnlockActivity" />
+
+        <!-- 输入验证码开锁 -->
+        <activity android:name=".bike.InputCodeUnlockActivity" />
+
+        <!-- 结束用车 -->
+        <activity android:name=".bike.BikeUsingFinishActivity" />
+
+        <!-- 保修 -->
+        <activity android:name=".bike.BikeMaintainActivity" />
+
+        <!-- 反馈 -->
+        <activity android:name=".bike.BikeFeedbackActivity" />
+
+
+        <!-- 个人信息 -->
+        <activity android:name=".navigation.PersonalInfoActivity"/>
+
+        <!-- 修改昵称 -->
+        <activity android:name=".navigation.PersonalNameActivity"/>
+
+        <!-- 我的行程 -->
+        <activity android:name=".navigation.JourneyActivity"/>
+
+        <!-- 我的钱包 -->
+        <activity android:name=".navigation.WalletActivity"/>
+
+        <!-- 我的钱包明细 -->
+        <activity android:name=".navigation.WalletDetailActivity"/>
+
+        <!-- 我的钱包优惠券 -->
+        <activity android:name=".navigation.WalletCouponActivity"/>
+
+        <!-- 押金余额 -->
+        <activity android:name=".navigation.WalletDepositActivity"/>
+
+        <!-- 退还押金 -->
+        <activity android:name=".navigation.WalletDepositRefundActivity"/>
+
+        <!-- 充值 -->
+        <activity android:name=".navigation.WalletRechargeActivity"/>
+
+        <!-- 年卡 -->
+        <activity android:name=".navigation.FreeCardActivity" />
+
+        <!-- 信用积分 -->
+        <activity android:name=".navigation.CreditActivity" />
+
+        <!-- 邀请好友 -->
+        <activity android:name=".navigation.InviteFriendActivity" />
+
+        <!-- 使用指南 -->
+        <activity android:name=".navigation.HelpActivity" />
+
+        <!-- 关于我们 -->
+        <activity android:name=".navigation.AboutUsActivity" />
+
+
+
+        <!--微信支付 -->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                    />
+            </intent-filter>
+         </activity>
+        <!--公共图片选择-->
+        <activity android:name=".common.activity.ChoosePicActivity"
+            android:theme="@style/transStyle"
+            />
+        <!-- 内部浏览器 -->
+        <activity android:name=".common.activity.BrowserActivity" />
+
+        <!-- 高德 start -->
+        <meta-data android:name="com.amap.api.v2.apikey"
+            android:value="187bd1ec7c0e16894e0f55310300fd02" />
+        <service android:name="com.amap.api.location.APSService" />
+        <!-- 高德 end -->
+
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
+
+        <!-- UMENGStart -->
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59be43feaed179682d00007c">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="2733ed4271b673cc4e8259451a202447">
+        </meta-data>
+
+        <!-- UMENGEND -->
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>
