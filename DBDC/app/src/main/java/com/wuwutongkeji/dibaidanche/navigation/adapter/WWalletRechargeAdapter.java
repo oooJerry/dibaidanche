@@ -9,6 +9,9 @@ import com.wuwutongkeji.dibaidanche.R;
 import com.wuwutongkeji.dibaidanche.base.BaseRecyclerAdapter;
 import com.wuwutongkeji.dibaidanche.base.BaseRecyclerViewHolder;
 import com.wuwutongkeji.dibaidanche.common.util.TextUtil;
+import com.wuwutongkeji.dibaidanche.navigation.FreeCardActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -16,8 +19,8 @@ import butterknife.BindView;
  * Created by Mr.Bai on 2017/9/26.
  */
 
-public class WalletRechargeAdapter extends BaseRecyclerAdapter
-        <WalletRechargeAdapter.ViewHolder, Long> {
+public class WWalletRechargeAdapter extends BaseRecyclerAdapter
+        <WWalletRechargeAdapter.ViewHolder, Long> {
 
     private boolean state;
 
@@ -32,7 +35,7 @@ public class WalletRechargeAdapter extends BaseRecyclerAdapter
         mOnItemClickListener = listener;
     }
 
-    public WalletRechargeAdapter(Context context, boolean state) {
+    public WWalletRechargeAdapter(Context context, boolean state) {
         super(context);
         this.state = state;
     }
@@ -49,18 +52,37 @@ public class WalletRechargeAdapter extends BaseRecyclerAdapter
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Long data = mData.get(position);
+
         if (state) {
             holder.btnRecharge.setSelected(index == position);
         } else {
             holder.btnRecharge.setSelected(false);
         }
-        holder.btnRecharge.setText("充值" + TextUtil.getMoneyByPenny(data) + "元");
+        if (position == 0) {
+            holder.btnRecharge.setText("365天=" + ((double)data / 100) + "元");
+        }
+        if (position == 1) {
+            holder.btnRecharge.setText("180天=" + ((double)data / 100) + "元");
+        }
+        if (position == 2) {
+            holder.btnRecharge.setText("90天=" + ((double)data / 100) + "元");
+        }
+        if (position == 3) {
+            holder.btnRecharge.setText("30天=" + ((double)data / 100) + "元");
+        }
 
         holder.btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 state = true;
                 index = position;
+                if (position == 1) {
+                    FreeCardActivity.freeCardTypeId = "3";
+                }else if (position == 3) {
+                    FreeCardActivity.freeCardTypeId = "1";
+                }else {
+                    FreeCardActivity.freeCardTypeId = position+"";
+                }
                 notifyDataSetChanged();
                 if (mOnItemClickListener != null) {
                     mOnItemClickListener.onItemClick(view, position);
@@ -74,8 +96,8 @@ public class WalletRechargeAdapter extends BaseRecyclerAdapter
     }
 
     public void getSelectedState() {
-       state = false;
-       notifyDataSetChanged();
+        state = false;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends BaseRecyclerViewHolder {

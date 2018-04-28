@@ -35,7 +35,7 @@ public class NetInterceptor implements Interceptor {
         Request request;
 
         String loginToken = SharedPreferencesUtil.read(AppConfig.USERKEYS.LOGINTOKEN);
-
+        System.out.println("获取loginToken:"+loginToken);
         if(!TextUtil.isEmpty(loginToken)){
 
             Request original = chain.request();

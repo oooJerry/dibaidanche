@@ -3,6 +3,7 @@ package com.wuwutongkeji.dibaidanche.navigation.contract.freecard;
 import com.wuwutongkeji.dibaidanche.base.BaseDependView;
 import com.wuwutongkeji.dibaidanche.base.BasePresenter;
 import com.wuwutongkeji.dibaidanche.common.manager.PayManager;
+import com.wuwutongkeji.dibaidanche.entity.DepositEntity;
 
 /**
  * Created by Mr.Bai on 17/11/19.
@@ -23,7 +24,7 @@ public interface FreeCardContract {
 
         void onShowCardTitle(String title);
 
-        void onShowCardPrice(String title);
+        void onShowCardPrice(DepositEntity title);
 
         void onShowSubmitTxt(String txt);
 

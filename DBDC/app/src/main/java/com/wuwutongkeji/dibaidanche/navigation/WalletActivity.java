@@ -16,6 +16,7 @@ import com.wuwutongkeji.dibaidanche.common.config.AppInterface;
 import com.wuwutongkeji.dibaidanche.common.util.SharedPreferencesUtil;
 import com.wuwutongkeji.dibaidanche.common.util.TextUtil;
 import com.wuwutongkeji.dibaidanche.entity.FreeCardEntity;
+import com.wuwutongkeji.dibaidanche.entity.LoginEntity;
 import com.wuwutongkeji.dibaidanche.entity.WalletDepositRefundEntity;
 import com.wuwutongkeji.dibaidanche.entity.WalletRechargeEntity;
 import com.wuwutongkeji.dibaidanche.navigation.contract.wallet.WalletContract;
@@ -68,6 +69,12 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
         setTitle("我的钱包");
         setRightBtnTitle("明细");
 
+        if (SharedPreferencesUtil.getUser().getBalance() < 0) {
+            btnRecharge.setText("充值");
+        } else {
+            btnRecharge.setText("购买骑行卡");
+        }
+
         btnBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,9 +101,20 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(AppIntent.getWalletRechargeActivity(mContext));
+                LoginEntity loginEntity = SharedPreferencesUtil.getUser();
+                if (SharedPreferencesUtil.getUser().getBalance() < 0) {
+                    Intent intent = new Intent(mContext, WalletRechargeActivity.class);
+                    startActivity(intent);
+                } else {
+                    if (!loginEntity.isAuthId()) {
+                        startActivity(AppIntent.getApproveActivity(mContext));
+                    }else {
+                        startActivity(AppIntent.getFreeCardActivity(mContext));
+                    }
+                }
             }
         });
+
     }
 
     @Override

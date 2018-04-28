@@ -47,17 +47,19 @@ public class NetDataManager {
         }
         return dataManager;
     }
-    private NetDataManager(){
+
+    private NetDataManager() {
         mNetWorkManager = NetWorkManager.getInstance();
         mNetService = mNetWorkManager.getNetService();
     }
 
     /**
      * 获取验证码
+     *
      * @param mobile
      * @return
      */
-    public Observable<String> user_fetchIdentifyCode(String mobile){
+    public Observable<String> user_fetchIdentifyCode(String mobile) {
         return RxUtils.converterMode(mNetService.user_fetchIdentifyCode(mobile));
     }
 
@@ -66,7 +68,7 @@ public class NetDataManager {
      * @param map
      * @return
      */
-    public Observable<LoginEntity> user_login(Map<String,Object> map){
+    public Observable<LoginEntity> user_login(Map<String, Object> map) {
         return RxUtils.converterMode(mNetService.user_login(map));
     }
 
@@ -76,8 +78,8 @@ public class NetDataManager {
      * @param name
      * @return
      */
-    public Observable<NetModel<LoginEntity>> user_auth(String idCard, String name){
-        return RxUtils.converterNillMode(mNetService.user_auth(idCard,name));
+    public Observable<NetModel<LoginEntity>> user_auth(String idCard, String name) {
+        return RxUtils.converterNillMode(mNetService.user_auth(idCard, name));
     }
 
     /***
@@ -87,15 +89,15 @@ public class NetDataManager {
      * @param certificateBack
      * @return
      */
-    public Observable<LoginEntity> user_appeal(String idCard,String name,String certificateFront,String certificateBack){
-        return RxUtils.converterMode(mNetService.user_appeal(idCard,name,certificateFront,certificateBack));
+    public Observable<LoginEntity> user_appeal(String idCard, String name, String certificateFront, String certificateBack) {
+        return RxUtils.converterMode(mNetService.user_appeal(idCard, name, certificateFront, certificateBack));
     }
 
     /***
      * 更新deviceToken
      * @return
      */
-    public Observable<Void> user_uploadDeviceToken(String token){
+    public Observable<Void> user_uploadDeviceToken(String token) {
         return RxUtils.converterMode(mNetService.user_uploadDeviceToken(token));
     }
 
@@ -104,7 +106,7 @@ public class NetDataManager {
      * 获取用户信息、状态
      * @return
      */
-    public Observable<NetModel<UserInfoEntity>> user_info(){
+    public Observable<NetModel<UserInfoEntity>> user_info() {
         return RxUtils.converterAllMode(mNetService.user_info());
     }
 
@@ -112,7 +114,7 @@ public class NetDataManager {
      * 获取用户信息、状态
      * @return
      */
-    public Observable<UserInfoEntity> user_info_filter(){
+    public Observable<UserInfoEntity> user_info_filter() {
         return RxUtils.converterMode(mNetService.user_info());
     }
 
@@ -122,18 +124,16 @@ public class NetDataManager {
      * @param photoUrl
      * @return
      */
-    public Observable<LoginEntity> user_update(String nickname,String photoUrl){
-        Map<String,String> map = new HashMap<>();
-        if(!TextUtil.isEmpty(nickname)){
-            map.put("nickname",nickname);
+    public Observable<LoginEntity> user_update(String nickname, String photoUrl) {
+        Map<String, String> map = new HashMap<>();
+        if (!TextUtil.isEmpty(nickname)) {
+            map.put("nickname", nickname);
         }
-        if(!TextUtil.isEmpty(photoUrl)){
-            map.put("photoUrl",photoUrl);
+        if (!TextUtil.isEmpty(photoUrl)) {
+            map.put("photoUrl", photoUrl);
         }
         return RxUtils.converterMode(mNetService.user_update(map));
     }
-
-
 
 
     /***
@@ -144,11 +144,11 @@ public class NetDataManager {
      * @param bicycleUsingStatus
      * @return
      */
-    public Observable<NetModel<List<LockByGisEntity>>> bicycle_queryBicycleByGis(String lon, String lat, String radius, String bicycleUsingStatus){
-        Map<String,String> map = new HashMap<>();
-        map.put("lon",lon);
-        map.put("lat",lat);
-        map.put("radius",radius);
+    public Observable<NetModel<List<LockByGisEntity>>> bicycle_queryBicycleByGis(String lon, String lat, String radius, String bicycleUsingStatus) {
+        Map<String, String> map = new HashMap<>();
+        map.put("lon", lon);
+        map.put("lat", lat);
+        map.put("radius", radius);
         map.put("bicycleUsingStatus", bicycleUsingStatus);
 
         return RxUtils.converterAllMode(mNetService.bicycle_queryBicycleByGis(map));
@@ -157,14 +157,15 @@ public class NetDataManager {
 
     /**
      * 开锁
+     *
      * @param userId
      * @param bicycleNum
      * @return
      */
-    public Observable<LockEntity> bicycle_openLock(String userId , String bicycleNum){
-        Map<String,String> map = new HashMap<>();
+    public Observable<LockEntity> bicycle_openLock(String userId, String bicycleNum) {
+        Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("bicycleNum",bicycleNum);
+        map.put("bicycleNum", bicycleNum);
         map.put("lon", LocationManager.getLongitude());
         map.put("lat", LocationManager.getLatitude());
 
@@ -173,16 +174,17 @@ public class NetDataManager {
 
     /**
      * 关锁
+     *
      * @return
      */
-    public Observable<Void> bicycle_closeLock(String userId,String lockNum,
-                                              String bicycleNum,String consumeId){
-        Map<String,String> map = new HashMap<>();
+    public Observable<Void> bicycle_closeLock(String userId, String lockNum,
+                                              String bicycleNum, String consumeId) {
+        Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
-        if(!TextUtil.isEmpty(lockNum)){
-            map.put("lockNum",lockNum);
+        if (!TextUtil.isEmpty(lockNum)) {
+            map.put("lockNum", lockNum);
         }
-        map.put("bicycleNum",bicycleNum);
+        map.put("bicycleNum", bicycleNum);
         map.put("lon", LocationManager.getLongitude());
         map.put("lat", LocationManager.getLatitude());
         map.put("consumeId", consumeId);
@@ -194,7 +196,7 @@ public class NetDataManager {
      * 反馈选项列表
      * @return
      */
-    public Observable<List<OptionTypeEntity>> feedBack_types(){
+    public Observable<List<OptionTypeEntity>> feedBack_types() {
         return RxUtils.converterMode(mNetService.feedBack_types());
     }
 
@@ -203,7 +205,7 @@ public class NetDataManager {
      * @param body
      * @return
      */
-    public Observable<Void> feedBack_add(MultipartBody body){
+    public Observable<Void> feedBack_add(MultipartBody body) {
         return RxUtils.converterMode(mNetService.feedBack_add(body));
     }
 
@@ -211,7 +213,7 @@ public class NetDataManager {
      * 报修选项
      * @return
      */
-    public Observable<List<OptionTypeEntity>> repairs_types(){
+    public Observable<List<OptionTypeEntity>> repairs_types() {
         return RxUtils.converterMode(mNetService.repairs_types());
     }
 
@@ -219,20 +221,21 @@ public class NetDataManager {
      * 报修选项
      * @return
      */
-    public Observable<Void> repairs_add( MultipartBody body){
+    public Observable<Void> repairs_add(MultipartBody body) {
         return RxUtils.converterMode(mNetService.repairs_add(body));
     }
 
     /**
      * 查询用户行程信息
+     *
      * @param pageNum
      * @return
      */
-    public Observable<List<LockEntity>> consume_queryConsumeList(int pageNum){
-        Map<String,String> map = new HashMap<>();
-        map.put("userId",SharedPreferencesUtil.getUser().getId());
-        map.put("pageSize",String.valueOf(AppConfig.PAGE_SIZE));
-        map.put("pageNum",String.valueOf(pageNum));
+    public Observable<List<LockEntity>> consume_queryConsumeList(int pageNum) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", SharedPreferencesUtil.getUser().getId());
+        map.put("pageSize", String.valueOf(AppConfig.PAGE_SIZE));
+        map.put("pageNum", String.valueOf(pageNum));
         return RxUtils.converterMode(mNetService.consume_queryConsumeList(map));
     }
 
@@ -242,15 +245,16 @@ public class NetDataManager {
      * @param consumeId
      * @return
      */
-    public Observable<ConsumeEntity> consume_queryConsumeState(String consumeId){
+    public Observable<ConsumeEntity> consume_queryConsumeState(String consumeId) {
         return RxUtils.converterMode(mNetService.consume_queryConsumeState(consumeId));
     }
+
     /***
      * 充值明细
      * @param payId
      * @return
      */
-    public Observable<WalletRecordEntity> pay_record(String payId){
+    public Observable<WalletRecordEntity> pay_record(String payId) {
         return RxUtils.converterAllMode(mNetService.pay_record(payId));
     }
 
@@ -259,7 +263,7 @@ public class NetDataManager {
      * 获取押金，最小用车余额，充值列表接口
      * @return
      */
-    public Observable<DepositEntity> pay_depositAmount(){
+    public Observable<DepositEntity> pay_depositAmount() {
         return RxUtils.converterMode(mNetService.pay_depositAmount());
     }
 
@@ -269,7 +273,7 @@ public class NetDataManager {
      * @param payChannel
      * @return
      */
-    public Observable<String> pay_depositChannel(String payChannel){
+    public Observable<String> pay_depositChannel(String payChannel) {
         return RxUtils.converterMode(mNetService.pay_depositChannel(payChannel));
     }
 
@@ -278,27 +282,39 @@ public class NetDataManager {
      * @param payChannel
      * @return
      */
-    public Observable<String> pay_yearcard(String payChannel){
+    public Observable<String> pay_yearcard(String payChannel) {
         return RxUtils.converterMode(mNetService.pay_yearcard(payChannel));
+    }
+
+    /***
+     * 获取充值月卡,季卡,半年卡支付凭证
+     * @param payChannel
+     * @return
+     */
+    public Observable<String> pay_freecard(String payChannel,String freeCardTypeId) {
+        return RxUtils.converterMode(mNetService.pay_freecard(payChannel,freeCardTypeId));
     }
 
     /**
      * 查询是否支付押金
+     *
      * @return
      */
-    public Observable<QueryDepositEntity> pay_queryDeposit(){
+    public Observable<QueryDepositEntity> pay_queryDeposit() {
         return RxUtils.converterMode(mNetService.pay_queryDeposit());
     }
 
 
-    public Observable<String> pay_balance(String payChannel,long amount){
-        return RxUtils.converterMode(mNetService.pay_balance(payChannel,String.valueOf(amount)));
+    public Observable<String> pay_balance(String payChannel, long amount) {
+        return RxUtils.converterMode(mNetService.pay_balance(payChannel, String.valueOf(amount)));
     }
+
     /**
      * 退押金理由
+     *
      * @return
      */
-    public Observable<List<String>> pay_refundReason(){
+    public Observable<List<String>> pay_refundReason() {
         return RxUtils.converterAllMode(mNetService.pay_refundReason());
     }
 
@@ -307,14 +323,14 @@ public class NetDataManager {
      * 退押金
      * @return
      */
-    public Observable<String> pay_refundDeposit(String reason){
+    public Observable<String> pay_refundDeposit(String reason) {
         return RxUtils.converterMode(mNetService.pay_refundDeposit(reason));
     }
 
     /***
      * 退押金状态
      */
-    public Observable<NetModel<String>> pay_queryRefund(){
+    public Observable<NetModel<String>> pay_queryRefund() {
         return RxUtils.converterAllMode(mNetService.pay_queryRefund());
     }
 
@@ -324,29 +340,31 @@ public class NetDataManager {
      * @param couponId
      * @return
      */
-    public Observable<WalletCouponEntity> coupon_fetch(String couponId){
+    public Observable<WalletCouponEntity> coupon_fetch(String couponId) {
         return RxUtils.converterAllMode(mNetService.coupon_fetch(couponId));
     }
 
     /**
      * 查询积分
+     *
      * @param creditScoreId
      * @return
      */
-    public Observable<CreditEntity> credit_fetch(String creditScoreId){
+    public Observable<CreditEntity> credit_fetch(String creditScoreId) {
         return RxUtils.converterAllMode(mNetService.credit_fetch(creditScoreId));
     }
 
     /***
      * 卡列表
      */
-    public Observable<NetModel<List<FreeCardEntity>>> freeCard_list_all(String cardId){
+    public Observable<NetModel<List<FreeCardEntity>>> freeCard_list_all(String cardId) {
         return RxUtils.converterAllMode(mNetService.freeCard_list(cardId));
     }
+
     /***
      * 卡列表
      */
-    public Observable<NetModel<List<FreeCardEntity>>> freeCard_list(String cardId){
+    public Observable<NetModel<List<FreeCardEntity>>> freeCard_list(String cardId) {
         return RxUtils.converterNillMode(mNetService.freeCard_list(cardId));
     }
 
@@ -354,7 +372,7 @@ public class NetDataManager {
      * 获取分享参数
      * @return
      */
-    public Observable<ShareEntity> share_param(){
+    public Observable<ShareEntity> share_param() {
         return RxUtils.converterMode(mNetService.share_param());
     }
 
@@ -363,13 +381,13 @@ public class NetDataManager {
      * @param filePath
      * @return
      */
-    public Observable<UploadFileEntity> uploadFile(String filePath, AppConfig.FileSource fileSource){
+    public Observable<UploadFileEntity> uploadFile(String filePath, AppConfig.FileSource fileSource) {
         File file = new File(filePath);
         String fileName = System.currentTimeMillis() + "_" + file.getName();
         MultipartBody.Builder mFormBuilder = new MultipartBody.Builder();
-        mFormBuilder.addFormDataPart("name",fileName);
+        mFormBuilder.addFormDataPart("name", fileName);
         mFormBuilder.addFormDataPart("file", fileName, HttpUtil.getFormRequest(file));
-        mFormBuilder.addFormDataPart("source",fileSource.getSource());
+        mFormBuilder.addFormDataPart("source", fileSource.getSource());
         return RxUtils.converterMode(mNetService.uploadFile(mFormBuilder.build()));
     }
 
@@ -377,7 +395,7 @@ public class NetDataManager {
      * 获取最新版本
      * @return
      */
-    public Observable<UploadEntity> version_last(){
+    public Observable<UploadEntity> version_last() {
         return RxUtils.converterMode(mNetService.version_last());
     }
 

@@ -13,6 +13,7 @@ import com.wuwutongkeji.dibaidanche.common.util.SharedPreferencesUtil;
 import com.wuwutongkeji.dibaidanche.entity.FreeCardEntity;
 import com.wuwutongkeji.dibaidanche.entity.LoginEntity;
 import com.wuwutongkeji.dibaidanche.entity.UserInfoEntity;
+import com.wuwutongkeji.dibaidanche.launch.contract.main.MainContract;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,6 +24,7 @@ import java.util.List;
  */
 
 public class WalletPresenter extends WalletContract.WalletBasePresenter {
+
 
     @Override
     protected void onAttach() {
@@ -92,11 +94,11 @@ public class WalletPresenter extends WalletContract.WalletBasePresenter {
             EventBus.getDefault().post(AppConfig.NO_LOGIN);
             return null;
         }
-        if (!loginEntity.isPayDeposit()) {
-            return AppIntent.getDepositActivity(mContext);
-        }
         if (!loginEntity.isAuthId()) {
             return AppIntent.getApproveActivity(mContext);
+        }
+        if (SharedPreferencesUtil.getUser().getBalance() < 0) {
+            return AppIntent.getWalletRechargeActivity(mContext);
         }
         return AppIntent.getFreeCardActivity(mContext);
     }

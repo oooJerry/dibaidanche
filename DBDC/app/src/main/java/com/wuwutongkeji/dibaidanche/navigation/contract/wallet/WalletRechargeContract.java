@@ -17,6 +17,8 @@ public interface WalletRechargeContract {
 
         public abstract void onPayBalance(PayManager.PayChannel payChannel,long amount);
 
+        public abstract void onPay(PayManager.PayChannel payChannel);
+
         public abstract PayManager.PayListener onPayListener();
 
         public abstract void showMoreType(View btnMoreType,View btnAliPay);

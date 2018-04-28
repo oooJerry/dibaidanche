@@ -117,7 +117,7 @@
         <!-- 充值 -->
         <activity android:name=".navigation.WalletRechargeActivity"/>
 
-        <!-- 年卡 -->
+        <!-- 骑行卡 -->
         <activity android:name=".navigation.FreeCardActivity" />
 
         <!-- 信用积分 -->

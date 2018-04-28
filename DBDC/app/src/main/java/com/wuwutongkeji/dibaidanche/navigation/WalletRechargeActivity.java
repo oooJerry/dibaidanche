@@ -17,16 +17,23 @@ import com.wuwutongkeji.dibaidanche.common.activity.BrowserActivity;
 import com.wuwutongkeji.dibaidanche.common.config.AppIntent;
 import com.wuwutongkeji.dibaidanche.common.config.AppInterface;
 import com.wuwutongkeji.dibaidanche.common.manager.PayManager;
+import com.wuwutongkeji.dibaidanche.common.net.impl.DefaultNetSubscriber;
+import com.wuwutongkeji.dibaidanche.common.popup.FreeCardPayDialog;
 import com.wuwutongkeji.dibaidanche.common.util.SharedPreferencesUtil;
 import com.wuwutongkeji.dibaidanche.entity.DepositEntity;
 import com.wuwutongkeji.dibaidanche.entity.WalletRechargeEntity;
+import com.wuwutongkeji.dibaidanche.navigation.adapter.WWalletRechargeAdapter;
 import com.wuwutongkeji.dibaidanche.navigation.adapter.WalletRechargeAdapter;
+import com.wuwutongkeji.dibaidanche.navigation.contract.freecard.FreeCardContract;
+import com.wuwutongkeji.dibaidanche.navigation.contract.freecard.FreeCardPresenter;
 import com.wuwutongkeji.dibaidanche.navigation.contract.wallet.WalletRechargeContract;
 import com.wuwutongkeji.dibaidanche.navigation.contract.wallet.WalletRechargePresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +44,8 @@ import butterknife.ButterKnife;
 
 public class WalletRechargeActivity extends BaseToolbarActivity implements WalletRechargeContract.WalletRechargeBaseView {
 
+    @BindView(R.id.recyclerview1)
+    RecyclerView recyclerview1;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @BindView(R.id.wechat_radio)
@@ -55,8 +64,11 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
     TextView btnProtocol;
 
     WalletRechargeAdapter mAdapter;
+    WWalletRechargeAdapter mWAdapter;
 
     WalletRechargeContract.WalletRechargeBasePresenter mPresenter;
+    //骑行卡 true  余额充值 false
+    private boolean state = true;
 
     @Override
     protected int getLayoutId() {
@@ -69,7 +81,10 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
         setTitle("充值");
 
         recyclerview.setLayoutManager(new GridLayoutManager(mContext, 2));
-        recyclerview.setAdapter(mAdapter = new WalletRechargeAdapter(mContext));
+        recyclerview.setAdapter(mAdapter = new WalletRechargeAdapter(mContext, false));
+
+        recyclerview1.setLayoutManager(new GridLayoutManager(mContext, 2));
+        recyclerview1.setAdapter(mWAdapter = new WWalletRechargeAdapter(mContext, true));
 
         btnProtocol.setText(Html.fromHtml(
                 "点击充值即表示已阅读并同意" +
@@ -92,16 +107,23 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
         btnMoreType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.showMoreType(btnMoreType,btnAlipay);
+                mPresenter.showMoreType(btnMoreType, btnAlipay);
             }
         });
 
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.onPayBalance(aliPayRadio.isChecked() ?
-                                PayManager.PayChannel.ALIPAY : PayManager.PayChannel.WECHATPAY,
-                        mAdapter.getSelectedData());
+                if (state) {
+                    //购买骑行卡
+                    mPresenter.onPay(aliPayRadio.isChecked() ?
+                            PayManager.PayChannel.ALIPAY : PayManager.PayChannel.WECHATPAY);
+                } else {
+                    //充值余额
+                    mPresenter.onPayBalance(aliPayRadio.isChecked() ?
+                                    PayManager.PayChannel.ALIPAY : PayManager.PayChannel.WECHATPAY,
+                            mAdapter.getSelectedData());
+                }
             }
         });
         btnProtocol.setOnClickListener(new View.OnClickListener() {
@@ -113,11 +135,24 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
                 startActivity(intent);
             }
         });
+        mWAdapter.setOnItemClickListener(new WWalletRechargeAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                state = true;
+                mAdapter.getSelectedState();
+            }
+        });
+        mAdapter.setOnItemClickListener(new WalletRechargeAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                state = false;
+                mWAdapter.getSelectedState();
+            }
+        });
     }
 
     @Override
     protected void initData() {
-
         mPresenter = newPresenter(new WalletRechargePresenter(), this);
     }
 
@@ -130,6 +165,12 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
     @Override
     public void onLoadAmount(DepositEntity entity) {
         mAdapter.update(entity.getBalanceList());
+        List<Long> longList = new ArrayList<>();
+        longList.add(entity.getYearCard());
+        longList.add(entity.getSixMonthCard());
+        longList.add(entity.getSeasonCard());
+        longList.add(entity.getMonthCard());
+        mWAdapter.update(longList);
     }
 
     @Override

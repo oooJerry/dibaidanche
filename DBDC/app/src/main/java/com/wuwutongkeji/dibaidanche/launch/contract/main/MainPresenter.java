@@ -259,17 +259,17 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                             return;
                         }
 
-                        if(!loginEntity.isPayDeposit()){
-                            mUserState = AppConfig.UserState.NO_PAY;
-                            if(!HavfreeCard){
-                                Intent intent = AppIntent.getDepositActivity(mContext);
-                                SharedPreferencesUtil.saveUser(entity);
-                                mUserStateFragment.setData("您尚未充押金，无法租车骑行"
-                                        , intent);
-                                mDependView.showDialog(mUserStateFragment);
-                            }
-                            return;
-                        }
+//                        if(!loginEntity.isPayDeposit()){
+//                            mUserState = AppConfig.UserState.NO_PAY;
+//                            if(!HavfreeCard){
+//                                Intent intent = AppIntent.getDepositActivity(mContext);
+//                                SharedPreferencesUtil.saveUser(entity);
+//                                mUserStateFragment.setData("您尚未充押金，无法租车骑行"
+//                                        , intent);
+//                                mDependView.showDialog(mUserStateFragment);
+//                            }
+//                            return;
+//                        }
 
                         if(!loginEntity.isAuthId()){
                             mUserState = AppConfig.UserState.NO_AUTH;

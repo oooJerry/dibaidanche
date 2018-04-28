@@ -33,7 +33,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:layout_marginBottom="18dp"
-            android:text="冲年卡"
+            android:text="购买骑行卡"
             />
 
     </FrameLayout>

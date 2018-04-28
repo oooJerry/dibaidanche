@@ -176,9 +176,9 @@ public class AppConfig {
         if(null == entity || TextUtil.isEmpty(entity.getLoginToken())){
             return AppIntent.getLoginActivity(mContext);
         }
-        if(!entity.isPayDeposit()){
-            return AppIntent.getDepositActivity(mContext);
-        }
+//        if(!entity.isPayDeposit()){
+//            return AppIntent.getDepositActivity(mContext);
+//        }
         if(!entity.isAuthId()){
             return AppIntent.getApproveActivity(mContext);
         }

@@ -8,19 +8,19 @@ public class AppInterface {
 
 
     // address
-    public static final String ADDRESS = "http://mobileapi.dibaibike.com/dibai/";
+//    public static final String ADDRESS = "http://mobileapi.dibaibike.com/dibai/";
     // 静态网页地址
     public static final String DEFAULT_ADDRESS = "http://mobileapi.dibaibike.com:9999/dibai/";
 
 
-//    // address
-//    public static final String ADDRESS = "http://test.dibaibike.com/dibai/";
+    //    // address测试
+    public static final String ADDRESS = "http://test.dibaibike.com:80/dibai/";
 //    // 静态网页地址
 //    public static final String DEFAULT_ADDRESS = "http://test.dibaibike.com:9999/dibai/";
 
     /***
      * 发送验证码
-      */
+     */
     public static final String USER_FETCHIDENTIFYCODE = "user/fetchIdentifyCode";
 
 
@@ -120,6 +120,10 @@ public class AppInterface {
      * 获取充值年卡支付凭证
      */
     public static final String PAY_YEARCARD = "pay/yearcard";
+    /***
+     * 获取充值年卡支付凭证
+     */
+    public static final String PAY_FREECARD = "pay/freecard";
 
     /***
      * 充值明细
@@ -184,7 +188,6 @@ public class AppInterface {
      * 检查新版本
      */
     public static final String VERSION_LAST = "version/last";
-
 
 
     // 用户指南-如何报修

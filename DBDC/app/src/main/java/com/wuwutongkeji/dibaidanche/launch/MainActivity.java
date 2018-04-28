@@ -112,13 +112,13 @@ public class MainActivity extends BaseToolbarActivity
             public void onClick(View view) {
                 Intent intent = mPresenter.getIntentByUserState(mContext);
                 if(null != intent){
-                    if(!(mPresenter.checkHavfreeCards() && mPresenter.getUserState() == AppConfig.UserState.NO_PAY)){
+                    if(!( mPresenter.getUserState() == AppConfig.UserState.NO_PAY)){
                         startActivity(intent);
                         return;
                     }
                 }
                 if((!mPresenter.isHaveBalance() || !mPresenter.isPayBalance()) && !mPresenter.checkHavfreeCards() ){
-                    showMsg("您的余额不足,请充值");
+//                    showMsg("您的余额不足,请充值");
                     startActivity(AppIntent.getWalletRechargeActivity(mContext));
                 }else{
                     startActivity(AppIntent.getScanCodeUnlockActivity(mContext));

@@ -7,6 +7,7 @@ import android.view.animation.ScaleAnimation;
 import com.wuwutongkeji.dibaidanche.common.manager.PayManager;
 import com.wuwutongkeji.dibaidanche.common.net.impl.DefaultNetSubscriber;
 import com.wuwutongkeji.dibaidanche.entity.DepositEntity;
+import com.wuwutongkeji.dibaidanche.navigation.FreeCardActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,29 @@ public class WalletRechargePresenter extends WalletRechargeContract.WalletRechar
                         mDependView.onPay(payChannel,s);
                     }
                 });
+
+    }
+
+    @Override
+    public void onPay(final PayManager.PayChannel payChannel) {
+        if (FreeCardActivity.freeCardTypeId.equals("0")) {
+            mNetDataManager.pay_yearcard(String.valueOf(payChannel))
+                    .subscribe(new DefaultNetSubscriber<String>(mDialog) {
+                        @Override
+                        public void onCompleted(String s) {
+                            mDependView.onPay(payChannel, s);
+                        }
+                    });
+
+        } else {
+            mNetDataManager.pay_freecard(String.valueOf(payChannel), FreeCardActivity.freeCardTypeId)
+                    .subscribe(new DefaultNetSubscriber<String>(mDialog) {
+                        @Override
+                        public void onCompleted(String s) {
+                            mDependView.onPay(payChannel, s);
+                        }
+                    });
+        }
 
     }
 

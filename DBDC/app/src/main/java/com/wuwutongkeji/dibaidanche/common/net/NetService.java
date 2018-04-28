@@ -43,6 +43,7 @@ public interface NetService {
 
     /**
      * 获取验证码
+     *
      * @param mobile
      * @return
      */
@@ -53,12 +54,13 @@ public interface NetService {
 
     /**
      * 登录
+     *
      * @param map
      * @return
      */
     @FormUrlEncoded
     @POST(AppInterface.USER_LOGIN)
-    Observable<NetModel<LoginEntity>> user_login(@FieldMap Map<String,Object> map);
+    Observable<NetModel<LoginEntity>> user_login(@FieldMap Map<String, Object> map);
 
 
     /***
@@ -89,6 +91,7 @@ public interface NetService {
 
     /**
      * 更新deviceToken
+     *
      * @return
      */
     @FormUrlEncoded
@@ -96,26 +99,26 @@ public interface NetService {
     Observable<NetModel<Void>> user_uploadDeviceToken(@Field("deviceToken") String deviceToken);
 
 
-
     /**
      * 获取用户信息、状态
+     *
      * @return
      */
     @POST(AppInterface.USER_INFO)
     Observable<NetModel<UserInfoEntity>> user_info();
 
 
-
     @FormUrlEncoded
     @POST(AppInterface.USER_UPDATE)
-    Observable<NetModel<LoginEntity>> user_update(@FieldMap Map<String,String> map);
+    Observable<NetModel<LoginEntity>> user_update(@FieldMap Map<String, String> map);
+
     /*****
      * 查询车辆
      * @param map
      * @return
      */
     @GET(AppInterface.BICYCLE_QUERYBICYCLEBYGIS)
-    Observable<NetModel<List<LockByGisEntity>>> bicycle_queryBicycleByGis(@QueryMap Map<String,String> map);
+    Observable<NetModel<List<LockByGisEntity>>> bicycle_queryBicycleByGis(@QueryMap Map<String, String> map);
 
     /*****
      * 开锁
@@ -124,7 +127,7 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(AppInterface.BICYCLE_OPENLOCK)
-    Observable<NetModel<LockEntity>> bicycle_openLock(@FieldMap Map<String,String> map);
+    Observable<NetModel<LockEntity>> bicycle_openLock(@FieldMap Map<String, String> map);
 
     /*****
      * 关锁
@@ -133,7 +136,7 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(AppInterface.BICYCLE_CLOSELOCK)
-    Observable<NetModel<Void>> bicycle_closeLock(@FieldMap Map<String,String> map);
+    Observable<NetModel<Void>> bicycle_closeLock(@FieldMap Map<String, String> map);
 
     /****
      * 反馈选项列表
@@ -151,6 +154,7 @@ public interface NetService {
 
     /**
      * 报修选项
+     *
      * @return
      */
     @GET(AppInterface.REPAIRS_TYPES)
@@ -165,7 +169,7 @@ public interface NetService {
      * 查询行程信息
      */
     @GET(AppInterface.CONSUME_QUERYCONSUMELIST)
-    Observable<NetModel<List<LockEntity>>> consume_queryConsumeList(@QueryMap Map<String,String> map);
+    Observable<NetModel<List<LockEntity>>> consume_queryConsumeList(@QueryMap Map<String, String> map);
 
     /***
      * 查询行程详细信息
@@ -193,6 +197,7 @@ public interface NetService {
 
     /**
      * 获取支付凭证
+     *
      * @param payChannel
      * @return
      */
@@ -204,8 +209,14 @@ public interface NetService {
     @POST(AppInterface.PAY_YEARCARD)
     Observable<NetModel<String>> pay_yearcard(@Field("payChannel") String payChannel);
 
+    @FormUrlEncoded
+    @POST(AppInterface.PAY_FREECARD)
+    Observable<NetModel<String>> pay_freecard(@Field("payChannel") String payChannel,
+                                              @Field("freeCardTypeId") String freeCardTypeId);
+
     /**
      * 查询是否支付押金
+     *
      * @return
      */
     @POST(AppInterface.PAY_QUERYDEPOSIT)
@@ -214,18 +225,19 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(AppInterface.PAY_BALANCE)
-    Observable<NetModel<String>> pay_balance(@Field("payChannel") String payChannel,@Field("amount") String amount);
+    Observable<NetModel<String>> pay_balance(@Field("payChannel") String payChannel, @Field("amount") String amount);
 
     /***
      * 退押金理由
      * @return
      */
     @POST(AppInterface.PAY_REFUNDREASON)
-    Observable<List<String>>pay_refundReason();
+    Observable<List<String>> pay_refundReason();
 
 
     /**
      * 退押金
+     *
      * @return
      */
     @FormUrlEncoded
@@ -273,8 +285,10 @@ public interface NetService {
 
     @POST(AppInterface.SHARE_PARAM)
     Observable<NetModel<ShareEntity>> share_param();
+
     /**
      * 上传文件
+     *
      * @param file
      * @return
      */
