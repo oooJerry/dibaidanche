@@ -58,18 +58,20 @@ public class WWalletRechargeAdapter extends BaseRecyclerAdapter
         } else {
             holder.btnRecharge.setSelected(false);
         }
-        if (position == 0) {
-            holder.btnRecharge.setText("365天=" + ((double)data / 100) + "元");
-        }
-        if (position == 1) {
-            holder.btnRecharge.setText("180天=" + ((double)data / 100) + "元");
-        }
-        if (position == 2) {
-            holder.btnRecharge.setText("90天=" + ((double)data / 100) + "元");
-        }
-        if (position == 3) {
-            holder.btnRecharge.setText("30天=" + ((double)data / 100) + "元");
-        }
+//        if (position == 0) {
+//            holder.btnRecharge.setText("365天=" + ((double)data / 100) + "元");
+//        }
+//        if (position == 1) {
+        holder.btnRecharge.setText("180天=" + ((double) data / 100) + "元");
+        FreeCardActivity.freeCardTypeId = "3";
+
+//        }
+//        if (position == 2) {
+//            holder.btnRecharge.setText("90天=" + ((double)data / 100) + "元");
+//        }
+//        if (position == 3) {
+//            holder.btnRecharge.setText("30天=" + ((double)data / 100) + "元");
+//        }
 
         holder.btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +80,10 @@ public class WWalletRechargeAdapter extends BaseRecyclerAdapter
                 index = position;
                 if (position == 1) {
                     FreeCardActivity.freeCardTypeId = "3";
-                }else if (position == 3) {
+                } else if (position == 3) {
                     FreeCardActivity.freeCardTypeId = "1";
-                }else {
-                    FreeCardActivity.freeCardTypeId = position+"";
+                } else {
+                    FreeCardActivity.freeCardTypeId = position + "";
                 }
                 notifyDataSetChanged();
                 if (mOnItemClickListener != null) {

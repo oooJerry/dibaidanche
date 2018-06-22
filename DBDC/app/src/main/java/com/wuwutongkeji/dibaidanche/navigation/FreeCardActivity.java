@@ -2,19 +2,26 @@ package com.wuwutongkeji.dibaidanche.navigation;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.wuwutongkeji.dibaidanche.R;
 import com.wuwutongkeji.dibaidanche.base.BaseToolbarActivity;
+import com.wuwutongkeji.dibaidanche.common.config.AppIntent;
 import com.wuwutongkeji.dibaidanche.common.manager.PayManager;
 import com.wuwutongkeji.dibaidanche.common.popup.FreeCardPayDialog;
+import com.wuwutongkeji.dibaidanche.common.util.SharedPreferencesUtil;
 import com.wuwutongkeji.dibaidanche.entity.DepositEntity;
+import com.wuwutongkeji.dibaidanche.navigation.adapter.WWalletRechargeAdapter;
 import com.wuwutongkeji.dibaidanche.navigation.contract.freecard.FreeCardContract;
 import com.wuwutongkeji.dibaidanche.navigation.contract.freecard.FreeCardPresenter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,22 +32,18 @@ import butterknife.ButterKnife;
 
 public class FreeCardActivity extends BaseToolbarActivity implements FreeCardContract.FreeCardBaseView {
 
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerview;
     @BindView(R.id.tv_cardtitle)
     TextView tvCardtitle;
-    @BindView(R.id.tv_cardPrice)
-    TextView tvCardPrice;
-    @BindView(R.id.tv_cardPrice1)
-    TextView tvCardPrice1;
-    @BindView(R.id.tv_cardPrice2)
-    TextView tvCardPrice2;
-    @BindView(R.id.tv_cardPrice3)
-    TextView tvCardPrice3;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     FreeCardPayDialog freeCardPayDialog;
     FreeCardPresenter mPresenter;
 
     public static String freeCardTypeId = "0";
+
+    WWalletRechargeAdapter mWAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -59,76 +62,12 @@ public class FreeCardActivity extends BaseToolbarActivity implements FreeCardCon
             }
         });
 
-
         //freeCardTypeId = 0:年卡,1:月卡,2:季卡,3:半年卡
         // 默认选年卡
-        freeCardTypeId = "0";
-        tvCardPrice.setBackgroundResource(R.drawable.gray_org_state_enable);
-        tvCardPrice1.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-        tvCardPrice2.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-        tvCardPrice3.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-        tvCardPrice.setTextColor(Color.parseColor("#ffffff"));
-        tvCardPrice1.setTextColor(Color.parseColor("#666666"));
-        tvCardPrice2.setTextColor(Color.parseColor("#666666"));
-        tvCardPrice3.setTextColor(Color.parseColor("#666666"));
+//      freeCardTypeId = "0";
+        recyclerview.setLayoutManager(new GridLayoutManager(mContext, 2));
+        recyclerview.setAdapter(mWAdapter = new WWalletRechargeAdapter(mContext, true));
 
-        tvCardPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                freeCardTypeId = "0";
-                tvCardPrice.setBackgroundResource(R.drawable.gray_org_state_enable);
-                tvCardPrice1.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice2.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice3.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice.setTextColor(Color.parseColor("#ffffff"));
-                tvCardPrice1.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice2.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice3.setTextColor(Color.parseColor("#666666"));
-            }
-        });
-        tvCardPrice1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                freeCardTypeId = "3";
-                tvCardPrice.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice1.setBackgroundResource(R.drawable.gray_org_state_enable);
-                tvCardPrice2.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice3.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice1.setTextColor(Color.parseColor("#ffffff"));
-                tvCardPrice2.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice3.setTextColor(Color.parseColor("#666666"));
-
-            }
-        });
-        tvCardPrice2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                freeCardTypeId = "2";
-                tvCardPrice.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice1.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice2.setBackgroundResource(R.drawable.gray_org_state_enable);
-                tvCardPrice3.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice1.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice2.setTextColor(Color.parseColor("#ffffff"));
-                tvCardPrice3.setTextColor(Color.parseColor("#666666"));
-            }
-        });
-        tvCardPrice3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                freeCardTypeId = "1";
-                tvCardPrice.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice1.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice2.setBackgroundResource(R.drawable.bg_gray_shape_radiu_4);
-                tvCardPrice3.setBackgroundResource(R.drawable.gray_org_state_enable);
-                tvCardPrice.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice1.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice2.setTextColor(Color.parseColor("#666666"));
-                tvCardPrice3.setTextColor(Color.parseColor("#ffffff"));
-            }
-        });
     }
 
     @Override
@@ -151,10 +90,23 @@ public class FreeCardActivity extends BaseToolbarActivity implements FreeCardCon
 
     @Override
     public void onShowCardPrice(DepositEntity title) {
-        tvCardPrice.setText("365天=" + ((double)title.getYearCard() / 100) + "元");
-        tvCardPrice1.setText("180天=" + ((double)title.getSixMonthCard() / 100) + "元");
-        tvCardPrice2.setText("90天=" + ((double)title.getSeasonCard() / 100) + "元");
-        tvCardPrice3.setText("30天=" + ((double)title.getMonthCard() / 100) + "元");
+        //仅留半年卡充值
+        List<Long> longList = new ArrayList<>();
+//        longList.add(entity.getYearCard());
+        longList.add(title.getSixMonthCard());
+//        longList.add(entity.getSeasonCard());
+//        longList.add(entity.getMonthCard());
+        mWAdapter.update(longList);
+//        tvCardPrice.setText("365天=" + ((double)title.getYearCard() / 100) + "元");
+//        tvCardPrice1.setText("180天=" + ((double) title.getSixMonthCard() / 100) + "元");
+//        tvCardPrice2.setText("90天=" + ((double)title.getSeasonCard() / 100) + "元");
+//        tvCardPrice3.setText("30天=" + ((double)title.getMonthCard() / 100) + "元");
+        // 判断是否交押金
+//        if (SharedPreferencesUtil.getUser().isPayDeposit()) {
+//        } else {
+//            AppIntent.getDepositActivity(mContext);
+//        }
+//        finish();
     }
 
     @Override

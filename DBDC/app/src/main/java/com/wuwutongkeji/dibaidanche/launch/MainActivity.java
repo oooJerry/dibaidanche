@@ -58,7 +58,7 @@ import butterknife.OnClick;
  */
 
 public class MainActivity extends BaseToolbarActivity
-        implements MainContract.MainBaseView,SensorEventListener {
+        implements MainContract.MainBaseView, SensorEventListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -111,18 +111,29 @@ public class MainActivity extends BaseToolbarActivity
             @Override
             public void onClick(View view) {
                 Intent intent = mPresenter.getIntentByUserState(mContext);
-                if(null != intent){
-                    if(!( mPresenter.getUserState() == AppConfig.UserState.NO_PAY)){
+//                if(null != intent){
+//                    if(!( mPresenter.getUserState() == AppConfig.UserState.NO_PAY)){
+//                        startActivity(intent);
+//                        return;
+//                    }
+//                }
+//                if((!mPresenter.isHaveBalance() || !mPresenter.isPayBalance()) && !mPresenter.checkHavfreeCards() ){
+////                    showMsg("您的余额不足,请充值");
+//                    startActivity(AppIntent.getWalletRechargeActivity(mContext));
+//                }else{
+//                    startActivity(AppIntent.getScanCodeUnlockActivity(mContext));
+//                }
+                if (!mPresenter.checkHavfreeCards()) {
+                    startActivity(AppIntent.getFreeCardActivity(mContext));
+                    return;
+                }
+                if (intent != null) {
+                    if (!(mPresenter.getUserState() == AppConfig.UserState.NO_PAY)) {
                         startActivity(intent);
                         return;
                     }
                 }
-                if((!mPresenter.isHaveBalance() || !mPresenter.isPayBalance()) && !mPresenter.checkHavfreeCards() ){
-//                    showMsg("您的余额不足,请充值");
-                    startActivity(AppIntent.getWalletRechargeActivity(mContext));
-                }else{
-                    startActivity(AppIntent.getScanCodeUnlockActivity(mContext));
-                }
+                startActivity(AppIntent.getScanCodeUnlockActivity(mContext));
             }
         });
 
@@ -147,11 +158,11 @@ public class MainActivity extends BaseToolbarActivity
     @Override
     protected void initData() {
 
-        mPresenter = newPresenter(new MainPresenter(aMap,mContext), this);
+        mPresenter = newPresenter(new MainPresenter(aMap, mContext), this);
         aMap.setOnCameraChangeListener(mPresenter);
         aMap.setInfoWindowAdapter(mPresenter);
 
-        if(TextUtil.isEmpty(SharedPreferencesUtil.getUser().getLoginToken())){
+        if (TextUtil.isEmpty(SharedPreferencesUtil.getUser().getLoginToken())) {
             startActivity(AppIntent.getLoginActivity(mContext));
         }
 
@@ -160,7 +171,7 @@ public class MainActivity extends BaseToolbarActivity
 
     @Override
     public void onBackPressed() {
-        if(mPresenter.getUserState() == AppConfig.UserState.NO_LOGIN){
+        if (mPresenter.getUserState() == AppConfig.UserState.NO_LOGIN) {
             startActivity(AppIntent.getLoginActivity(mContext));
             return;
         }
@@ -183,7 +194,7 @@ public class MainActivity extends BaseToolbarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.icon_feedback,R.id.icon_header,R.id.nav_journey, R.id.nav_wallet,  R.id.nav_credit,
+    @OnClick({R.id.icon_feedback, R.id.icon_header, R.id.nav_journey, R.id.nav_wallet, R.id.nav_credit,
             R.id.nav_inviteFriend, R.id.nav_help, R.id.nav_aboutUs})
     public void onNavClick(View view) {
         int id = view.getId();
@@ -191,7 +202,7 @@ public class MainActivity extends BaseToolbarActivity
         if (id == R.id.nav_help) { // 使用指南
             startActivity(AppIntent.getHelpActivity(mContext));
         }
-        if(id == R.id.icon_feedback){ // 反馈
+        if (id == R.id.icon_feedback) { // 反馈
             startActivity(AppIntent.getBikeFeedbackActivity(mContext));
         }
         if (id == R.id.icon_header) { // 个人信用更改
@@ -272,7 +283,7 @@ public class MainActivity extends BaseToolbarActivity
     @Override
     public void showDialog(Fragment mDialog) {
 
-        if(null == mDialog){
+        if (null == mDialog) {
             return;
         }
 
@@ -303,7 +314,7 @@ public class MainActivity extends BaseToolbarActivity
     @Override
     public void dismissDialog(Fragment mDialog) {
 
-        if(null == mDialog){
+        if (null == mDialog) {
             return;
         }
 
@@ -333,11 +344,11 @@ public class MainActivity extends BaseToolbarActivity
     @Subscribe(threadMode = ThreadMode.MAIN)
     @Override
     public void onUpdatePersonalInfo(LoginEntity entity) {
-        if(null != entity){
+        if (null != entity) {
             tvName.setText(entity.getNickname());
-            tvCreditScore.setText((entity.isAuthId() ? "已认证" : "未认证" ) + ":信用分" + entity.getCredit());
+            tvCreditScore.setText((entity.isAuthId() ? "已认证" : "未认证") + ":信用分" + entity.getCredit());
             iconHeader.setImageURI(entity.getPhotoUrl());
-        }else {
+        } else {
             tvName.setText(null);
             tvCreditScore.setText(null);
             iconHeader.setImageURI("");
@@ -346,46 +357,46 @@ public class MainActivity extends BaseToolbarActivity
 
     // 退出登录
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLogout(LogoutEntity entity){
+    public void onLogout(LogoutEntity entity) {
         mPresenter.onLogout(mContext);
     }
 
     // 获取锁类型
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void queryRidingLockType(WalletDepositQueryEntity queryEntity){
+    public void queryRidingLockType(WalletDepositQueryEntity queryEntity) {
         mPresenter.queryRidingLockType(queryEntity);
     }
 
     // 退押金
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDepositRefund(WalletDepositRefundEntity entity){
+    public void onDepositRefund(WalletDepositRefundEntity entity) {
         mPresenter.onDepositRefund(this);
     }
 
     // 充值
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onWalletRecharge(WalletRechargeEntity entity){
+    public void onWalletRecharge(WalletRechargeEntity entity) {
         mPresenter.onWalletRecharge(entity.blance);
     }
 
     // 开锁
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onOpenLock(LockEntity entity){
+    public void onOpenLock(LockEntity entity) {
         mPresenter.onOpenLock(entity);
     }
 
     // 开锁 或关锁
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAptitudeLockOption(AppConfig.LockType type){
+    public void onAptitudeLockOption(AppConfig.LockType type) {
         mPresenter.onAptitudeLockOption(type);
     }
 
     // 关锁
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onCloseLock(CloseLockEntity entity){
+    public void onCloseLock(CloseLockEntity entity) {
         mPresenter.onCloseLock();
         Intent intent = AppIntent.getBikeUsingFinishActivity(mContext);
-        intent.putExtra(BikeUsingFinishActivity.KEY_DATA,entity.getConsumeId());
+        intent.putExtra(BikeUsingFinishActivity.KEY_DATA, entity.getConsumeId());
         startActivity(intent);
     }
 
@@ -401,19 +412,19 @@ public class MainActivity extends BaseToolbarActivity
     }
 
 
-
-    public void startSensor(){
+    public void startSensor() {
         Sensor mSensor = null;
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
-        if(mSensorManager!=null){
+        if (mSensorManager != null) {
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         }
-        if(mSensor!=null){
+        if (mSensor != null) {
             mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
-    public void stopSensor(){
-        if(null != mSensorManager){
+
+    public void stopSensor() {
+        if (null != mSensorManager) {
             mSensorManager.unregisterListener(this);
         }
     }
@@ -422,9 +433,9 @@ public class MainActivity extends BaseToolbarActivity
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_ORIENTATION){
+        if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
             float x = event.values[SensorManager.DATA_X];
-            if(Math.abs(x - mSensorLastX)>1.0){
+            if (Math.abs(x - mSensorLastX) > 1.0) {
                 mPresenter.onMarkerRotate(x);
             }
             mSensorLastX = x;

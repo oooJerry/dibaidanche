@@ -8,13 +8,13 @@ public class AppInterface {
 
 
     // address
-//    public static final String ADDRESS = "http://mobileapi.dibaibike.com/dibai/";
+    public static final String ADDRESS = "http://mobileapi.dibaibike.com/dibai/";
     // 静态网页地址
     public static final String DEFAULT_ADDRESS = "http://mobileapi.dibaibike.com:9999/dibai/";
 
 
     //    // address测试
-    public static final String ADDRESS = "http://test.dibaibike.com:80/dibai/";
+//    public static final String ADDRESS = "http://test.dibaibike.com:80/dibai/";
 //    // 静态网页地址
 //    public static final String DEFAULT_ADDRESS = "http://test.dibaibike.com:9999/dibai/";
 

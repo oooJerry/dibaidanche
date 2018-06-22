@@ -34,6 +34,7 @@ public class FreeCardPayDialog extends BaseDialog {
     @Override
     public void onStart() {
         setOutCancel(true);
+        aliPayRadio.setChecked(true);
         super.onStart();
     }
 
@@ -64,7 +65,7 @@ public class FreeCardPayDialog extends BaseDialog {
             @Override
             public void onClick(View view) {
                 btnMoreType.setVisibility(View.GONE);
-                btnAlipay.setVisibility(View.VISIBLE);
+                btnWechat.setVisibility(View.VISIBLE);
             }
         });
 

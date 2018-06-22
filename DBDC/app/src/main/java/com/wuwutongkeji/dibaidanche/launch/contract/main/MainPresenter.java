@@ -312,10 +312,11 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                                 }
                             }
                             if(havfreeCard){
-                                SharedPreferencesUtil.writeLong(AppConfig.SHOWCARD_TIME,todayTime);
-                                FreeCardPublicityDialog freeCardPublicityDialog
-                                        = new FreeCardPublicityDialog();
-                                mDependView.showDialog(freeCardPublicityDialog);
+                                //关闭骑行卡免押金图片宣传
+//                                SharedPreferencesUtil.writeLong(AppConfig.SHOWCARD_TIME,todayTime);
+//                                FreeCardPublicityDialog freeCardPublicityDialog
+//                                        = new FreeCardPublicityDialog();
+//                                mDependView.showDialog(freeCardPublicityDialog);
                             }
                         }
                     }

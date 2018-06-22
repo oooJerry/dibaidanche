@@ -75,9 +75,9 @@ public class WalletRechargePresenter extends WalletRechargeContract.WalletRechar
     }
 
     @Override
-    public void showMoreType(View btnMoreType,View btnAliPay) {
+    public void showMoreType(View btnMoreType,View btnWechat) {
         btnMoreType.setVisibility(View.GONE);
-        btnAliPay.setVisibility(View.VISIBLE);
+        btnWechat.setVisibility(View.VISIBLE);
     }
 
     PayManager.PayListener onPayListener = new PayManager.PayListener() {

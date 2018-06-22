@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +50,8 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
     LinearLayout btnDeposit;
     @BindView(R.id.tv_isPayDeposit)
     TextView tvIsPayDeposit;
+    @BindView(R.id.image_isPayDeposit)
+    ImageView imageIsPayDeposit;
     @BindView(R.id.btn_recharge)
     Button btnRecharge;
     @BindView(R.id.tv_cardtitle)
@@ -69,11 +72,11 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
         setTitle("我的钱包");
         setRightBtnTitle("明细");
 
-        if (SharedPreferencesUtil.getUser().getBalance() < 0) {
-            btnRecharge.setText("充值");
-        } else {
-            btnRecharge.setText("购买骑行卡");
-        }
+//        if (SharedPreferencesUtil.getUser().getBalance() < 0) {
+//            btnRecharge.setText("充值");
+//        } else {
+        btnRecharge.setText("购买骑行卡");
+//        }
 
         btnBalance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,28 +93,38 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
                 startActivity(AppIntent.getWalletCouponActivity(mContext));
             }
         });
-
+        // 判断是否交押金
+        if (SharedPreferencesUtil.getUser().isPayDeposit()) {
+            imageIsPayDeposit.setVisibility(View.GONE);
+        } else {
+            imageIsPayDeposit.setVisibility(View.VISIBLE);
+        }
         btnDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(mPresenter.onDepositIntent(mContext));
+                if (!SharedPreferencesUtil.getUser().isPayDeposit()) {
+                    startActivity(mPresenter.onDepositIntent(mContext));
+                }
             }
         });
 
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginEntity loginEntity = SharedPreferencesUtil.getUser();
-                if (SharedPreferencesUtil.getUser().getBalance() < 0) {
-                    Intent intent = new Intent(mContext, WalletRechargeActivity.class);
-                    startActivity(intent);
-                } else {
-                    if (!loginEntity.isAuthId()) {
-                        startActivity(AppIntent.getApproveActivity(mContext));
-                    }else {
-                        startActivity(AppIntent.getFreeCardActivity(mContext));
-                    }
-                }
+                //充值页面
+                //startActivity(AppIntent.getWalletRechargeActivity(mContext));
+//                LoginEntity loginEntity = SharedPreferencesUtil.getUser();
+//                if (SharedPreferencesUtil.getUser().getBalance() < 0) {
+//                    //Intent intent = new Intent(mContext, WalletRechargeActivity.class);
+//                    //startActivity(intent);
+                startActivity(AppIntent.getFreeCardActivity(mContext));
+//                } else {
+//                    if (!loginEntity.isAuthId()) {
+//                        startActivity(AppIntent.getApproveActivity(mContext));
+//                    } else {
+//
+//                    }
+//                }
             }
         });
 

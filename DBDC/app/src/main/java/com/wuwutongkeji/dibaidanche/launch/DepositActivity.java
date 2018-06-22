@@ -69,7 +69,7 @@ public class DepositActivity extends BaseToolbarActivity implements DepositContr
         btnMoreType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.showMoreType(btnMoreType,btnAlipay);
+                mPresenter.showMoreType(btnMoreType,btnWechat);
             }
         });
         btnSubmit.setOnClickListener(new View.OnClickListener() {

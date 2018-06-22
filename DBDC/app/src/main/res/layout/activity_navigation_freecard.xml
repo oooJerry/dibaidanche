@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eaeef3"
@@ -7,116 +7,85 @@
 
     <include layout="@layout/include_toolbar" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/dibai_year_card" />
-
-        <TextView
-            android:id="@+id/tv_cardtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:gravity="center_vertical"
-            android:text="骑行卡规格选择"
-            android:textColor="#666666"
-            android:textSize="14sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_cardPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_gray_shape_radiu_4"
-                android:gravity="center"
-                android:minWidth="130dp"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_cardPrice1"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_gray_shape_radiu_4"
-                android:gravity="center"
-                android:minWidth="130dp"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_cardPrice2"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_below="@+id/tv_cardPrice"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_gray_shape_radiu_4"
-                android:gravity="center"
-                android:minWidth="130dp"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_cardPrice3"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_cardPrice1"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_gray_shape_radiu_4"
-                android:gravity="center"
-                android:minWidth="130dp"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="24dp"
-        android:text="1：年卡免收押金。\n2：年卡生效期间,每天不限骑行次数，每次行程前2小时免费(2小时以后正常计费，防止客户长期霸占车辆)。\n3：当前若无年卡,购买年卡后立即生效；当前若以有年卡,续费后有效期延续.(1年按照365天计算)\n4：购买或续费年卡成功后,相应费用不予退还.\n5：退押金后可以继续骑车，已购买的年卡有效期不变；年卡到期，需要重新缴纳押金后，才可继续骑车。"
-        android:textColor="#aaaaaa"
-        android:textSize="12sp" />
+        android:layout_below="@+id/app_bar_layout"
+        android:layout_marginBottom="65dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/dibai_year_card" />
+
+                <TextView
+                    android:id="@+id/tv_cardtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="骑行卡规格选择"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="16dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingBottom="24dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="24dp"
+                android:text="1：骑行卡180天免骑,押金99元,骑行卡到期前押金不可退。\n2：年卡生效期间,每天不限骑行次数，每次行程前2小时免费(2小时以后正常计费，防止客户长期霸占车辆)。\n3：当前若无年卡,购买年卡后立即生效；当前若以有年卡,续费后有效期延续.(1年按照365天计算)\n4：购买或续费年卡成功后,相应费用不予退还."
+                android:textColor="#aaaaaa"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:gravity="center">
 
@@ -132,4 +101,4 @@
             android:textSize="16sp" />
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

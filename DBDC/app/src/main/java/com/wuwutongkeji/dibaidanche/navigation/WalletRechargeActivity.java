@@ -107,7 +107,7 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
         btnMoreType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.showMoreType(btnMoreType, btnAlipay);
+                mPresenter.showMoreType(btnMoreType, btnWechat);
             }
         });
 
@@ -166,10 +166,10 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
     public void onLoadAmount(DepositEntity entity) {
         mAdapter.update(entity.getBalanceList());
         List<Long> longList = new ArrayList<>();
-        longList.add(entity.getYearCard());
+//        longList.add(entity.getYearCard());
         longList.add(entity.getSixMonthCard());
-        longList.add(entity.getSeasonCard());
-        longList.add(entity.getMonthCard());
+//        longList.add(entity.getSeasonCard());
+//        longList.add(entity.getMonthCard());
         mWAdapter.update(longList);
     }
 

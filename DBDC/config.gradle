@@ -7,8 +7,8 @@ ext {
             applicationId    : "com.wuwutongkeji.dibaidanche",
             minSdkVersion    : 14,
             targetSdkVersion : 22,
-            versionCode      : 29,
-            versionName      : "2.0.8"
+            versionCode      : 32,
+            versionName      : "2.2.0"
     ]
 
 }
