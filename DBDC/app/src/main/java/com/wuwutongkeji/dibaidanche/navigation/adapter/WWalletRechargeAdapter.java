@@ -58,14 +58,12 @@ public class WWalletRechargeAdapter extends BaseRecyclerAdapter
         } else {
             holder.btnRecharge.setSelected(false);
         }
-//        if (position == 0) {
-//            holder.btnRecharge.setText("365天=" + ((double)data / 100) + "元");
-//        }
-//        if (position == 1) {
+        if (position == 0) {
+            holder.btnRecharge.setText("365天=" + ((double) data / 100) + "元");
+        }
+        if (position == 1) {
         holder.btnRecharge.setText("180天=" + ((double) data / 100) + "元");
-        FreeCardActivity.freeCardTypeId = "3";
-
-//        }
+        }
 //        if (position == 2) {
 //            holder.btnRecharge.setText("90天=" + ((double)data / 100) + "元");
 //        }

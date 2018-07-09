@@ -105,10 +105,10 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     WalkRouteOverlay walkRouteOverlay;
 
-    public MainPresenter(AMap aMap,Context mContext){
+    public MainPresenter(AMap aMap, Context mContext) {
         this.aMap = aMap;
         this.mContext = mContext;
-        walkRouteOverlay = new WalkRouteOverlay(mContext,aMap);
+        walkRouteOverlay = new WalkRouteOverlay(mContext, aMap);
 
         final RouteSearch routeSearch = new RouteSearch(mContext);
         routeSearch.setRouteSearchListener(this);
@@ -124,11 +124,11 @@ public class MainPresenter extends MainContract.MainBasePresenter {
             public boolean onMarkerClick(Marker marker) {
 
                 Integer markerType = getMarkerType(marker);
-                if(null == markerType){
+                if (null == markerType) {
                     return false;
                 }
 
-                if(null == mCenterPositionMarker){
+                if (null == mCenterPositionMarker) {
                     return false;
                 }
                 double fromLat = mCenterPositionMarker.getPosition().latitude;
@@ -137,7 +137,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                 mDialog.show();
 
                 RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
-                        new LatLonPoint(fromLat,fromLng ),
+                        new LatLonPoint(fromLat, fromLng),
                         new LatLonPoint(marker.getPosition().latitude, marker.getPosition().longitude));
                 RouteSearch.WalkRouteQuery query = new RouteSearch.WalkRouteQuery(fromAndTo, RouteSearch.WALK_DEFAULT);
                 routeSearch.calculateWalkRouteAsyn(query);
@@ -181,7 +181,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                 LatLng latLng = new LatLng(aMapLocation.getLatitude(),
                         aMapLocation.getLongitude());
 
-                if(null == mCenterPositionMarker){
+                if (null == mCenterPositionMarker) {
                     mCenterPositionMarker = mDependView.onAddMarker(new MarkerOptions()
                             .position(latLng)
                             .icon(BitmapDescriptorFactory.fromResource(
@@ -190,7 +190,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                     onMoveMapLocation();
                 }
 
-                if(null == mCurrentPositionMarker){
+                if (null == mCurrentPositionMarker) {
                     mCurrentPositionMarker = mDependView.onAddMarker(new MarkerOptions()
                             .position(latLng)
                             .icon(BitmapDescriptorFactory.fromResource(
@@ -215,7 +215,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
     @Override
     public void checkUserStateDialog(final Context mContext) {
 
-        if(null == mUserState){
+        if (null == mUserState) {
             return;
         }
         mNetDataManager.user_info()
@@ -223,8 +223,8 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                     @Override
                     public void onCompleted(NetModel<UserInfoEntity> userInfoEntityNetModel) {
 
-                        if(null == userInfoEntityNetModel ||
-                                AppConfig.NO_LOGIN.equals(userInfoEntityNetModel.getReturnCode())){
+                        if (null == userInfoEntityNetModel ||
+                                AppConfig.NO_LOGIN.equals(userInfoEntityNetModel.getReturnCode())) {
                             mUserState = AppConfig.UserState.NO_LOGIN;
                             Intent intent = AppIntent.getLoginActivity(mContext);
                             mUserStateFragment.setData("您尚未完成手机验证，请先进行手机验证"
@@ -235,14 +235,14 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
                         UserInfoEntity userInfoEntity = userInfoEntityNetModel.getData();
 
-                        if(null == userInfoEntity){
+                        if (null == userInfoEntity) {
                             mDependView.showMsg(userInfoEntityNetModel.getDesc());
                             return;
                         }
                         HavfreeCard = userInfoEntity.isHasFreeCard();
                         LoginEntity loginEntity = userInfoEntity.getUser();
 
-                        if(null == loginEntity){
+                        if (null == loginEntity) {
                             mDependView.showMsg(AppConfig.NET_ERROR);
                             return;
                         }
@@ -252,7 +252,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                         EventBus.getDefault().post(loginEntity);
 
                         LockEntity lockEntity = userInfoEntity.getConsumeRecord();
-                        if(null != lockEntity ){
+                        if (null != lockEntity) {
                             lockEntity.setHasFreeCard(HavfreeCard);
                             lockEntity.setConsumeId(lockEntity.getId());
                             EventBus.getDefault().post(lockEntity);
@@ -271,10 +271,19 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 //                            return;
 //                        }
 
-                        if(!loginEntity.isAuthId()){
+                        if (!loginEntity.isAuthId()) {
                             mUserState = AppConfig.UserState.NO_AUTH;
                             Intent intent = AppIntent.getApproveActivity(mContext);
                             mUserStateFragment.setData("您尚未实名认证，无法租车骑行"
+                                    , intent);
+                            mDependView.showDialog(mUserStateFragment);
+                            return;
+                        }
+
+                        if (!HavfreeCard && loginEntity.getBalance() == 0) {
+                            mUserState = AppConfig.UserState.NO_CARD;
+                            Intent intent = AppIntent.getFreeCardActivity(mContext);
+                            mUserStateFragment.setData("您尚未充值骑行卡,无法租车骑行"
                                     , intent);
                             mDependView.showDialog(mUserStateFragment);
                             return;
@@ -293,25 +302,25 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                     @Override
                     public void onCompleted(NetModel<List<FreeCardEntity>> netModel) {
 
-                        if("NO_LOGIN".equals(netModel.getReturnCode())){
+                        if ("NO_LOGIN".equals(netModel.getReturnCode())) {
                             return;
                         }
-                        long time = SharedPreferencesUtil.readLong(AppConfig.SHOWCARD_TIME,0);
+                        long time = SharedPreferencesUtil.readLong(AppConfig.SHOWCARD_TIME, 0);
 
                         long todayTime = DateUtil.getTodayStartDate();
 
                         boolean havfreeCard = true;
-                        if(todayTime != time){
+                        if (todayTime != time) {
 
-                            if(null != netModel.getData()){
-                                for(FreeCardEntity freeCardEntity: netModel.getData()){
-                                    if(freeCardEntity.getRemainTime() > 0){
+                            if (null != netModel.getData()) {
+                                for (FreeCardEntity freeCardEntity : netModel.getData()) {
+                                    if (freeCardEntity.getRemainTime() > 0) {
                                         havfreeCard = false;
                                         break;
                                     }
                                 }
                             }
-                            if(havfreeCard){
+                            if (havfreeCard) {
                                 //关闭骑行卡免押金图片宣传
 //                                SharedPreferencesUtil.writeLong(AppConfig.SHOWCARD_TIME,todayTime);
 //                                FreeCardPublicityDialog freeCardPublicityDialog
@@ -330,15 +339,18 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public Intent getIntentByUserState(Context mContext) {
-        if(mUserState == AppConfig.UserState.NO_LOGIN){
+        if (mUserState == AppConfig.UserState.NO_LOGIN) {
             return AppIntent.getLoginActivity(mContext);
         }
-        if(mUserState == AppConfig.UserState.NO_PAY){
+        if (mUserState == AppConfig.UserState.NO_PAY) {
             return AppIntent.getDepositActivity(mContext);
         }
-        if(mUserState == AppConfig.UserState.NO_AUTH){
+        if (mUserState == AppConfig.UserState.NO_AUTH) {
             return AppIntent.getApproveActivity(mContext);
         }
+//        if (mUserState == AppConfig.UserState.NO_CARD) {
+//            return AppIntent.getWalletRechargeActivity(mContext);
+//        }
         return null;
     }
 
@@ -376,7 +388,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public void onMoveMapLocation() {
-        if(null == mCenterPositionMarker || null == mCenterPositionMarker){
+        if (null == mCenterPositionMarker || null == mCenterPositionMarker) {
             return;
         }
         removeWalkLine();
@@ -388,7 +400,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public void onCenter2Current() {
-        if(null == mCenterPositionMarker || null == mCenterPositionMarker){
+        if (null == mCenterPositionMarker || null == mCenterPositionMarker) {
             return;
         }
         mCenterPositionMarker.setPosition(mCurrentPositionMarker.getPosition());
@@ -406,28 +418,28 @@ public class MainPresenter extends MainContract.MainBasePresenter {
         String radius = String.valueOf(AppConfig.RADIUS_QUERYBICYCLEBYGIS);
         String bicycleUsingStatus = AppConfig.BikeUsingStatus.BICYCLE_FREE.getBicycleUsingStatus();
 
-        mNetDataManager.bicycle_queryBicycleByGis(lng,lat,radius,bicycleUsingStatus)
+        mNetDataManager.bicycle_queryBicycleByGis(lng, lat, radius, bicycleUsingStatus)
                 .flatMap(new Func1<NetModel<List<LockByGisEntity>>, Observable<Marker>>() {
                     @Override
                     public Observable<Marker> call(NetModel<List<LockByGisEntity>> listNetModel) {
-                        if(null == listNetModel.getData()){
+                        if (null == listNetModel.getData()) {
                             return null;
                         }
 
-                        for(Marker marker: mBicycleList){
+                        for (Marker marker : mBicycleList) {
                             marker.remove();
                         }
                         mBicycleList.clear();
-                        for(LockByGisEntity entity : listNetModel.getData()){
-                            LatLng currentLatlng = new LatLng(entity.getLat(),entity.getLon());
+                        for (LockByGisEntity entity : listNetModel.getData()) {
+                            LatLng currentLatlng = new LatLng(entity.getLat(), entity.getLon());
                             Marker marker = mDependView.onAddMarker(new MarkerOptions()
                                     .position(currentLatlng)
                                     .icon(BitmapDescriptorFactory.fromResource(
                                             R.mipmap.icon_bicycle)).title("测试"));
 
                             Bundle bundle = new Bundle();
-                            bundle.putInt(KEY_MARKER_TYPE,TYPE_MARKER_BIKE);
-                            bundle.putSerializable(KEY_MARKER_DATA,entity);
+                            bundle.putInt(KEY_MARKER_TYPE, TYPE_MARKER_BIKE);
+                            bundle.putSerializable(KEY_MARKER_DATA, entity);
                             marker.setObject(bundle);
 
                             mBicycleList.add(marker);
@@ -467,7 +479,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public void queryRidingLockType(WalletDepositQueryEntity queryEntity) {
-        if(null != mAptitudeType){
+        if (null != mAptitudeType) {
             queryEntity.setLockType(mAptitudeType);
         }
     }
@@ -483,6 +495,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                 , AppIntent.getDepositActivity(mContext));
         mDependView.showDialog(mUserStateFragment);
     }
+
     @Override
     public void onWalletRecharge(long balance) {
         LoginEntity entity = SharedPreferencesUtil.getUser();
@@ -490,23 +503,24 @@ public class MainPresenter extends MainContract.MainBasePresenter {
         entity.setPayBalance(true);
         SharedPreferencesUtil.saveUser(entity);
     }
+
     @Override
     public void onOpenLock(LockEntity entity) {
 
-        if(null != mCenterPositionMarker){
-            onMarkerVisible(mCenterPositionMarker,false);
+        if (null != mCenterPositionMarker) {
+            onMarkerVisible(mCenterPositionMarker, false);
         }
-        for(Marker marker: mBicycleList){
-            onMarkerVisible(marker,false);
+        for (Marker marker : mBicycleList) {
+            onMarkerVisible(marker, false);
         }
 
-        if(isMachineLock(entity.getPassword())){
+        if (isMachineLock(entity.getPassword())) {
             mUnLockPwdDialog.setPwd(entity.getPassword());
             mRidingMachineDialog.setLockData(entity);
             mDependView.showDialog(mRidingMachineDialog);
             mDependView.showDialog(mUnLockPwdDialog);
 
-        }else{
+        } else {
 
             mAptitudeType = null;
 
@@ -526,7 +540,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
         LockEntity lockEntity = mUnLockLoadingDialog.getLockData();
 
-        if(mAptitudeType == type || null == lockEntity){
+        if (mAptitudeType == type || null == lockEntity) {
             return;
         }
         RidingAptitudeOptionEntity optionEntity = new RidingAptitudeOptionEntity();
@@ -535,14 +549,14 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
         mAptitudeType = type;
 
-        if(type == AppConfig.LockType.LOCK_OPENING) { // 正在开锁
+        if (type == AppConfig.LockType.LOCK_OPENING) { // 正在开锁
 
             // 后台轮询
             EventBus.getDefault().post(optionEntity);
 
             mDependView.showDialog(mUnLockLoadingDialog);
 
-        }else if(type == AppConfig.LockType.LOCK_OPENED_SUCCESS){ // 开锁成功
+        } else if (type == AppConfig.LockType.LOCK_OPENED_SUCCESS) { // 开锁成功
 
             // 后台轮询
             EventBus.getDefault().post(optionEntity);
@@ -551,14 +565,14 @@ public class MainPresenter extends MainContract.MainBasePresenter {
             mRidingAptitudeDialog.setLockData(lockEntity);
             mDependView.showDialog(mRidingAptitudeDialog);
 
-        }else if(type == AppConfig.LockType.TRAVEL_FINISHED){ // 骑行结束
+        } else if (type == AppConfig.LockType.TRAVEL_FINISHED) { // 骑行结束
 
             CloseLockEntity entity = new CloseLockEntity();
             entity.setConsumeId(lockEntity.getConsumeId());
             mRidingAptitudeDialog.setLockData(null);
             EventBus.getDefault().post(entity);
 
-        }else if(type == AppConfig.LockType.LOCK_OPENED_FAILED){ // 开锁失败
+        } else if (type == AppConfig.LockType.LOCK_OPENED_FAILED) { // 开锁失败
             onCloseLock();
             mAptitudeType = type;
             mRidingAptitudeDialog.setLockData(null);
@@ -570,11 +584,11 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public void onCloseLock() {
-        if(null != mCenterPositionMarker) {
-            onMarkerVisible(mCenterPositionMarker,true);
+        if (null != mCenterPositionMarker) {
+            onMarkerVisible(mCenterPositionMarker, true);
         }
-        for(Marker marker: mBicycleList){
-            onMarkerVisible(marker,true);
+        for (Marker marker : mBicycleList) {
+            onMarkerVisible(marker, true);
         }
         mDependView.dismissDialog(mUnLockLoadingDialog);
         mDependView.dismissDialog(mUnLockPwdDialog);
@@ -585,7 +599,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
     @Override
     public void onRefreshRotaAnima(View view) {
         Animation oldAnima = view.getAnimation();
-        if(null != oldAnima && !oldAnima.hasEnded()){
+        if (null != oldAnima && !oldAnima.hasEnded()) {
             return;
         }
         RotateAnimation anim = new RotateAnimation(0f, 360f * 2,
@@ -598,15 +612,15 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     @Override
     public void onCenterMarkerAnima() {
-        if(null == mCenterPositionMarker || null == mCenterPositionMarker){
+        if (null == mCenterPositionMarker || null == mCenterPositionMarker) {
             return;
         }
-        jumpPoint(mCenterPositionMarker,mCenterPositionMarker.getPosition());
+        jumpPoint(mCenterPositionMarker, mCenterPositionMarker.getPosition());
     }
 
     @Override
     public void onMarkerRotate(float rotateAngle) {
-        if(null != mCurrentPositionMarker){
+        if (null != mCurrentPositionMarker) {
             mCurrentPositionMarker.setRotateAngle(360 - rotateAngle);
         }
     }
@@ -622,7 +636,7 @@ public class MainPresenter extends MainContract.MainBasePresenter {
     }
 
     // 是否为机械锁
-    private boolean isMachineLock(String pwd){
+    private boolean isMachineLock(String pwd) {
         return !TextUtil.isEmpty(pwd);
     }
 
@@ -631,10 +645,10 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
         Marker marker = walkRouteOverlay.getSelectedMarker();
 
-        if(null == marker || !marker.isInfoWindowShown()){
+        if (null == marker || !marker.isInfoWindowShown()) {
             LatLng latLng = cameraPosition.target;
             Point mPoint = aMap.getProjection().toScreenLocation(latLng);
-            mCenterPositionMarker.setPositionByPixels(mPoint.x,mPoint.y);
+            mCenterPositionMarker.setPositionByPixels(mPoint.x, mPoint.y);
         }
     }
 
@@ -643,16 +657,17 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
         Marker marker = walkRouteOverlay.getSelectedMarker();
 
-        if(null == marker || !marker.isInfoWindowShown()){
+        if (null == marker || !marker.isInfoWindowShown()) {
             mCenterPositionMarker.setPosition(cameraPosition.target);
             onQueryBicycleByGisOfFree();
         }
 
     }
 
-    private void onMarkerVisible(Marker marker,boolean visible){
+    private void onMarkerVisible(Marker marker, boolean visible) {
         marker.setVisible(visible);
     }
+
     private void jumpPoint(final Marker marker, final LatLng markerLatlng) {
         final Handler handler = new Handler();
         final long start = SystemClock.uptimeMillis();
@@ -705,16 +720,16 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                     walkRouteOverlay.removeFromMap();
                     walkRouteOverlay.addToMap();
                     Marker marker = walkRouteOverlay.getSelectedMarker();
-                    if(null != marker){
+                    if (null != marker) {
                         Bundle bundle = (Bundle) marker.getObject();
-                        bundle.putParcelable(KEY_MARKER_DATA_OPT,walkPath);
+                        bundle.putParcelable(KEY_MARKER_DATA_OPT, walkPath);
                         marker.showInfoWindow();
                     }
                 }
-            }else{
+            } else {
                 mDependView.showMsg("路径规划失败");
             }
-        }else{
+        } else {
             mDependView.showMsg("路径规划失败");
         }
     }
@@ -724,22 +739,22 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
     }
 
-    private void removeWalkLine(){
+    private void removeWalkLine() {
         walkRouteOverlay.removeFromMap();
         Marker marker = walkRouteOverlay.getSelectedMarker();
-        if(null != marker){
+        if (null != marker) {
             marker.hideInfoWindow();
         }
         walkRouteOverlay.setSelectedMarker(null);
     }
 
     // 获取 地图标记类型
-    private Integer getMarkerType(Marker marker){
+    private Integer getMarkerType(Marker marker) {
         Object obj = marker.getObject();
-        if(null != obj){
+        if (null != obj) {
             Bundle bundle = (Bundle) obj;
             int type = bundle.getInt(KEY_MARKER_TYPE);
-            if(type == TYPE_MARKER_BIKE){
+            if (type == TYPE_MARKER_BIKE) {
                 return type;
             }
         }
@@ -751,9 +766,9 @@ public class MainPresenter extends MainContract.MainBasePresenter {
 
         Integer type = getMarkerType(marker);
 
-        if(null != type){
-            if(type == TYPE_MARKER_BIKE){
-                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_marker_bike,null);
+        if (null != type) {
+            if (type == TYPE_MARKER_BIKE) {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_marker_bike, null);
                 TextView tvNo = view.findViewById(R.id.tv_bikeNum);
                 TextView tvTime = view.findViewById(R.id.tv_time);
                 TextView tvDistance = view.findViewById(R.id.tv_distance);
@@ -761,8 +776,8 @@ public class MainPresenter extends MainContract.MainBasePresenter {
                 LockByGisEntity entity = (LockByGisEntity) bundle.getSerializable(KEY_MARKER_DATA);
                 WalkPath walkPath = bundle.getParcelable(KEY_MARKER_DATA_OPT);
                 tvNo.setText("车牌号:" + entity.getBicycleNum());
-                tvTime.setText(Html.fromHtml("步行<font color='#ff8400'>" + (int)walkPath.getDuration() / 60 + "</font>分钟" ));
-                tvDistance.setText(Html.fromHtml("距离<font color='#ff8400'>" + (int) walkPath.getDistance() +"</font>米" ));
+                tvTime.setText(Html.fromHtml("步行<font color='#ff8400'>" + (int) walkPath.getDuration() / 60 + "</font>分钟"));
+                tvDistance.setText(Html.fromHtml("距离<font color='#ff8400'>" + (int) walkPath.getDistance() + "</font>米"));
                 return view;
             }
         }

@@ -73,9 +73,9 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
         setRightBtnTitle("明细");
 
 //        if (SharedPreferencesUtil.getUser().getBalance() < 0) {
-//            btnRecharge.setText("充值");
+        btnRecharge.setText("充值");
 //        } else {
-        btnRecharge.setText("购买骑行卡");
+//        btnRecharge.setText("购买骑行卡");
 //        }
 
         btnBalance.setOnClickListener(new View.OnClickListener() {
@@ -93,18 +93,11 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
                 startActivity(AppIntent.getWalletCouponActivity(mContext));
             }
         });
-        // 判断是否交押金
-        if (SharedPreferencesUtil.getUser().isPayDeposit()) {
-            imageIsPayDeposit.setVisibility(View.GONE);
-        } else {
-            imageIsPayDeposit.setVisibility(View.VISIBLE);
-        }
+
         btnDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!SharedPreferencesUtil.getUser().isPayDeposit()) {
-                    startActivity(mPresenter.onDepositIntent(mContext));
-                }
+                startActivity(mPresenter.onDepositIntent(mContext));
             }
         });
 
@@ -112,12 +105,12 @@ public class WalletActivity extends BaseToolbarActivity implements WalletContrac
             @Override
             public void onClick(View view) {
                 //充值页面
-                //startActivity(AppIntent.getWalletRechargeActivity(mContext));
+                startActivity(AppIntent.getWalletRechargeActivity(mContext));
 //                LoginEntity loginEntity = SharedPreferencesUtil.getUser();
 //                if (SharedPreferencesUtil.getUser().getBalance() < 0) {
 //                    //Intent intent = new Intent(mContext, WalletRechargeActivity.class);
 //                    //startActivity(intent);
-                startActivity(AppIntent.getFreeCardActivity(mContext));
+//                startActivity(AppIntent.getFreeCardActivity(mContext));
 //                } else {
 //                    if (!loginEntity.isAuthId()) {
 //                        startActivity(AppIntent.getApproveActivity(mContext));

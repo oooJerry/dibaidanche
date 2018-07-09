@@ -110,7 +110,7 @@ public class MainActivity extends BaseToolbarActivity
         btnScanCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = mPresenter.getIntentByUserState(mContext);
+//                Intent intent = mPresenter.getIntentByUserState(mContext);
 //                if(null != intent){
 //                    if(!( mPresenter.getUserState() == AppConfig.UserState.NO_PAY)){
 //                        startActivity(intent);
@@ -123,15 +123,22 @@ public class MainActivity extends BaseToolbarActivity
 //                }else{
 //                    startActivity(AppIntent.getScanCodeUnlockActivity(mContext));
 //                }
-                if (!mPresenter.checkHavfreeCards()) {
+                if (!mPresenter.checkHavfreeCards() && SharedPreferencesUtil.getUser().getBalance() == 0) {
                     startActivity(AppIntent.getFreeCardActivity(mContext));
                     return;
                 }
-                if (intent != null) {
-                    if (!(mPresenter.getUserState() == AppConfig.UserState.NO_PAY)) {
-                        startActivity(intent);
-                        return;
-                    }
+                if (!SharedPreferencesUtil.getUser().isPayDeposit() && !mPresenter.checkHavfreeCards()){
+                    startActivity(AppIntent.getDepositActivity(mContext));
+                    return;
+                }
+                if (!SharedPreferencesUtil.getUser().isAuthId()){
+                    startActivity(AppIntent.getApproveActivity(mContext));
+                    return;
+                }
+                if (SharedPreferencesUtil.getUser().getBalance() < 0){
+                    showMsg("您的余额不足,请充值");
+                    startActivity(AppIntent.getWalletRechargeActivity(mContext));
+                    return;
                 }
                 startActivity(AppIntent.getScanCodeUnlockActivity(mContext));
             }

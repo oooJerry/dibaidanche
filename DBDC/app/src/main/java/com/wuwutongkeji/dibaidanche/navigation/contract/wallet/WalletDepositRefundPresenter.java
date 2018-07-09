@@ -39,6 +39,12 @@ public class WalletDepositRefundPresenter extends WalletDepositRefundContract.Wa
                         SharedPreferencesUtil.saveUser(loginEntity);
                         mDependView.onBusinessFinish(null);
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mDependView.getPresenter();
+                    }
                 });
     }
 }

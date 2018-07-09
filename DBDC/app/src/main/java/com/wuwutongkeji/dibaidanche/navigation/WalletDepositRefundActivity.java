@@ -1,10 +1,13 @@
 package com.wuwutongkeji.dibaidanche.navigation;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.wuwutongkeji.dibaidanche.R;
 import com.wuwutongkeji.dibaidanche.base.BaseToolbarActivity;
@@ -22,7 +25,7 @@ import butterknife.BindView;
  */
 
 public class WalletDepositRefundActivity extends BaseToolbarActivity
-        implements WalletDepositRefundContract.WalletDepositRefundBaseView{
+        implements WalletDepositRefundContract.WalletDepositRefundBaseView {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -65,7 +68,7 @@ public class WalletDepositRefundActivity extends BaseToolbarActivity
     @Override
     protected void initData() {
 
-        mPresenter = newPresenter(new WalletDepositRefundPresenter(),this);
+        mPresenter = newPresenter(new WalletDepositRefundPresenter(), this);
 
     }
 
@@ -77,6 +80,28 @@ public class WalletDepositRefundActivity extends BaseToolbarActivity
 
     @Override
     public WalletDepositRefundContract.WalletDepositRefundBasePresenter getPresenter() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this,
+                R.style.dialog);
+        final Dialog dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_error);
+        LinearLayout linearLayout = window.findViewById(R.id.linear);
+        Button btn_close = window.findViewById(R.id.btn_close);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         return mPresenter;
     }
 
@@ -84,6 +109,7 @@ public class WalletDepositRefundActivity extends BaseToolbarActivity
     public void onBusinessFinish(Serializable serializable) {
         finish();
     }
+
 
     @Override
     public void onLoadReason(List<String> data) {

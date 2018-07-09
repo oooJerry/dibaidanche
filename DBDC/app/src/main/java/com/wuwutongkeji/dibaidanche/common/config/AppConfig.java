@@ -121,7 +121,9 @@ public class AppConfig {
 
         NO_PAY, // 未支付押金
 
-        NO_AUTH; // 未认证
+        NO_AUTH, // 未认证
+
+        NO_CARD; // 没有骑行卡
     }
 
     public enum LockType{

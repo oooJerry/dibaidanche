@@ -92,7 +92,7 @@ public class FreeCardActivity extends BaseToolbarActivity implements FreeCardCon
     public void onShowCardPrice(DepositEntity title) {
         //仅留半年卡充值
         List<Long> longList = new ArrayList<>();
-//        longList.add(entity.getYearCard());
+        longList.add(title.getYearCard());
         longList.add(title.getSixMonthCard());
 //        longList.add(entity.getSeasonCard());
 //        longList.add(entity.getMonthCard());

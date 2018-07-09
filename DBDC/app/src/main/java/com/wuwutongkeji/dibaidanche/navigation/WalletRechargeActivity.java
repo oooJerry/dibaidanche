@@ -166,7 +166,8 @@ public class WalletRechargeActivity extends BaseToolbarActivity implements Walle
     public void onLoadAmount(DepositEntity entity) {
         mAdapter.update(entity.getBalanceList());
         List<Long> longList = new ArrayList<>();
-//        longList.add(entity.getYearCard());
+        System.out.println("输出结果:" + entity.getYearCard());
+        longList.add(entity.getYearCard());
         longList.add(entity.getSixMonthCard());
 //        longList.add(entity.getSeasonCard());
 //        longList.add(entity.getMonthCard());
